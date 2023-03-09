@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+message User {
+  message Profile {
+    message Avatars {
+      message Avatar {
+        string file = 10;
+        int64 since = 20;
+      }
+
+      optional Avatar current = 10;
+      repeated Avatar history = 20;
+    }
+
+    message Statuses {
+      message Status {
+        string text = 10;
+        int64 since = 20;
+      }
+
+      optional Status current = 10;
+      repeated Status history = 20;
+    }
+
+    Avatars avatars = 10;
+  }
+
+  message Meta {
+    int64 creation_date = 10;
+    optional int64 last_online_date = 20;
+  }
+
+  string id = 10;
+  string username = 20;
+  string email = 30;
+  string full_name = 40;
+  optional string phone = 50;
+  Profile profile = 60;
+  Meta meta = 70;
+}

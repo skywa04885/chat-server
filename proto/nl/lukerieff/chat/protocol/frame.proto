@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package nl.lukerieff.protocol;
+
+message TokenAuthenticationBody {
+  string token = 10;
+}
+
+message Frame {
+  message Channeled {
+    optional int32 channel = 10;
+
+    message Event {
+      int32 event = 10;
+      int64 timestamp = 20;
+      bytes body = 30;
+    }
+
+    message Request {
+      int32 req_no = 10;
+      int64 timestamp = 20;
+      int32 service_no = 30;
+      optional bytes body = 40;
+    }
+
+    message Response {
+      int32 req_no = 10;
+      int64 timestamp = 20;
+      optional bytes body = 30;
+    }
+
+    oneof child {
+      Event event = 20;
+      Request request = 30;
+      Response response = 40;
+    }
+  }
+
+  message System {
+    message ClaimChannel {
+      int32 channel = 10;
+      bytes body = 20;
+    }
+
+    message ReleaseChannel {
+      int32 channel = 10;
+    }
+
+    message ChangeHeartbeatPeriod {
+      int64 period = 10;
+    }
+
+    oneof child {
+      ClaimChannel claim_channel = 10;
+      ReleaseChannel release_channel = 20;
+      ChangeHeartbeatPeriod change_heartbeat_period = 30;
+    }
+  }
+
+  message Heartbeat {
+    int64 timestamp = 10;
+  }
+
+  message HalfDuplexStream {
+
+  }
+
+  oneof child {
+    Channeled channeled = 10;
+    Heartbeat heartbeat = 20;
+    System system = 30;
+  }
+}

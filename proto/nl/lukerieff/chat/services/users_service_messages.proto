@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package nl.lukerieff.services;
+
+message MeRequest {
+
+}
+
+message MeResponse {
+
+}
+
+message SearchRequest {
+  string query = 10;
+  int32 limit = 20;
+}
+
+message SearchResponse {
+
+}
